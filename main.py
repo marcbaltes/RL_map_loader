@@ -27,7 +27,6 @@ Config.set('graphics', 'resizable', True)
 home_dir = os.getcwd()
 map_path = ""
 rl_path = ""
-import_map = ""
 
 class RLPathButton(Button):
     @staticmethod
@@ -36,6 +35,9 @@ class RLPathButton(Button):
         root = tk.Tk()
         root.withdraw()
         rl_path = filedialog.askdirectory()
+        f = open("rl_path.txt", "w")
+        f.write(rl_path)
+        f.close
         return rl_path
 
 class MapPathButton(Button):
@@ -45,10 +47,12 @@ class MapPathButton(Button):
         root = tk.Tk()
         root.withdraw()
         map_path = filedialog.askdirectory()
+        f = open("map_path.txt", "w")
+        f.write(map_path)
+        f.close
         return map_path
 
 class MapLoader(Widget):
-
     def reset(self):
         # reset all button colors
         buttons = self.children[0].children[0].children
@@ -68,7 +72,8 @@ class MapLoader(Widget):
         # put original bak from this repo
         copy2(home_dir+"\\Labs_Underpass_P.upk", full_rl_path)          
     
-    def load_maps(self):
+    def load_maps(self, *args):
+        print(map_path)
         if map_path != '':
             # remove previous maps
             for c in list(self.children):
@@ -112,7 +117,11 @@ class MapLoader(Widget):
 
     def update_RLPATH(self):
         self.ids["RLPATH"].text = "RL Path: " + rl_path
-    
+
+    def update_RLPATH_save(self, *args):
+        self.ids["RLPATH"].text = "RL Path: " + rl_path
+        Clock.unschedule(self.update_RLPATH_save)
+
     def update_MAPPATH(self):
         self.ids["MAPPATH"].text = "Map Folder Path: " + map_path
         self.load_maps()
@@ -147,11 +156,44 @@ class MapLoader(Widget):
        
 
 class MapLoaderApp(App):
+    global map_path
+    global rl_path
 
+    load_save = False
+
+    os.chdir("./")
+    found1 = False
+    if os.path.exists("rl_path.txt"):
+        f = open("rl_path.txt", "r")
+        rl_path = f.readlines()[0]
+        rl_path_save = "RL Path: " + rl_path
+        found1 = True
+        f.close()
+    else:
+        rl_path_save = "RL Path: "
+
+    found2 = False
+    if os.path.exists("map_path.txt"):
+        f = open("map_path.txt", "r")
+        map_path = f.readlines()[0]
+        map_path_save = "Map Folder Path: " + map_path
+        found2 = True
+        f.close()
+    else:
+        map_path_save = "Map Folder Path: "
+
+    if found1 and found2:
+        load_save = True
+
+    def update(self, *args):
+        pass
     
     def build(self):
+        m = MapLoader()
         self.title = "Custom Map Loader"
-        return MapLoader()
+        if self.load_save:
+            Clock.schedule_once(partial(m.load_maps), 1)
+        return m
 
 
 if __name__ == '__main__':
