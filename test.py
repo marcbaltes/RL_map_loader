@@ -1,27 +1,16 @@
-import tkinter as tk
-from tkinter import filedialog
-
-from kivy.app import App
-from kivy.base import Builder
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
+from kivy.uix.scrollview import ScrollView
+from kivy.core.window import Window
+from kivy.app import runTouchApp
 
-class PathButton(Button):
-    @staticmethod
-    def get_path():
-        root = tk.Tk()
-        root.withdraw()
-        folder_selected = filedialog.askdirectory()
-        print(folder_selected)
-        return folder_selected
+layout = GridLayout(cols=1, spacing=10, size_hint_y=None)
+# Make sure the height is such that there is something to scroll.
+layout.bind(minimum_height=layout.setter('height'))
+for i in range(100):
+    btn = Button(text=str(i), size_hint_y=None, height=40)
+    layout.add_widget(btn)
+root = ScrollView(size_hint=(1, None), size=(Window.width, Window.height))
+root.add_widget(layout)
 
-class rootwi(BoxLayout):
-    pass
-
-
-class MyApp(App):
-    def build(self):
-        return rootwi()
-
-if __name__ == '__main__':
-    MyApp().run()
+runTouchApp(root)

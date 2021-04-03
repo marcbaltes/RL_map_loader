@@ -6,7 +6,7 @@
             rgba: 0.5, 0.5, 0.5, 1
         Rectangle:
             pos: 0, self.height - 43
-            size: self.width, 43
+            size: self.width, 43   
 
     Label:
         id: RLPATH
@@ -34,7 +34,7 @@
     MapPathButton:
         pos: root.x + 226, root.height - 42
         size: 150, 40
-        text: 'Load Maps'
+        text: 'Import Maps'
         on_press: self.get_path()
         on_state: root.update_MAPPATH()
         background_color: 0.5, 1, 0.5, 1
@@ -54,7 +54,6 @@
         size: 150, 40
         text: 'Repair Game Files'
         on_press: root.test()
-
 
 
             
