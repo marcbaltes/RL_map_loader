@@ -14,7 +14,7 @@
         text_size: 500, 500
         halign:'left'
         valign:'middle'
-        pos: 205, root.height - 104
+        pos: 204, root.height - 104
 
     Label:
         id: MAPPATH
@@ -22,7 +22,7 @@
         text_size: 500, 500
         halign:'left'
         valign:'middle'
-        pos: 205, root.height - 122
+        pos: 204, root.height - 122
 
     RLPathButton:
         pos: root.x+1, root.height - 42
@@ -38,6 +38,16 @@
         on_press: self.get_path()
         on_state: root.update_MAPPATH()
         background_color: 0.5, 1, 0.5, 1
+
+    Button:
+        pos: root.x + 376, root.height - 42
+        size: 40, 40
+        text: ''
+        on_press: root.load_maps()
+        Image:
+            source: "refresh.png"
+            y: root.height - 72
+            x: root.x + 346
 
     Button:
         pos: root.width - 150, root.height - 42

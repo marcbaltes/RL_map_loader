@@ -1,4 +1,5 @@
 import kivy
+import os
 import tkinter as tk
 from tkinter import filedialog
 
@@ -8,8 +9,10 @@ from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.uix.button import Button
+from kivy.config import Config 
 
 kivy.require("1.10.1")
+Config.set('graphics', 'resizable', True)
 
 map_path = ""
 rl_path = ""
@@ -45,12 +48,21 @@ class ImportButton(Button):
 class MapLoader(Widget):
     def test(self):
         print("jasdjkasd")
+    
+    def load_maps(self):
+        if map_path != '':
+            path = map_path.replace("/", "\\")
+            os.chdir(path)
+        print(os.getcwd())
 
     def update_RLPATH(self):
         self.ids["RLPATH"].text = "RL Path: " + rl_path
     
     def update_MAPPATH(self):
         self.ids["MAPPATH"].text = "Map Folder Path: " + map_path
+
+        self.load_maps()
+
 
 
 class MapLoaderApp(App):
