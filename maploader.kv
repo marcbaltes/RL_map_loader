@@ -33,22 +33,17 @@
 
     MapPathButton:
         pos: root.x + 226, root.height - 42
-        size: 160, 40
-        text: 'Locate Map Folder'
+        size: 150, 40
+        text: 'Load Maps'
         on_press: self.get_path()
         on_state: root.update_MAPPATH()
+        background_color: 0.5, 1, 0.5, 1
 
     Button:
         pos: root.width - 150, root.height - 42
         size: 150, 40
         text: 'Repair Game Files'
         on_press: root.test()
-    
-    ImportButton:
-        pos: root.width - 250, root.height - 42
-        size: 100, 40
-        text: 'Import Map'
-        on_press: self.get_path()
 
 
 
