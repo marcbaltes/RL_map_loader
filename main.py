@@ -50,6 +50,12 @@ class MapPathButton(Button):
 class MapLoader(Widget):
 
     def reset(self):
+        # reset all button colors
+        buttons = self.children[0].children[0].children
+        for b in buttons:
+            if b.background_color == [0, 1, 0, 1]:
+                b.background_color = [1, 1, 1, 1]
+
         # remove underpass and the backup if it's there 
         full_rl_path = rl_path+"/TAGame/CookedPCConsole"
         for _,_, files in os.walk(full_rl_path):
