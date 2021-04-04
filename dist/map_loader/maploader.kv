@@ -1,0 +1,58 @@
+#:kivy 1.0.9
+
+<MapLoader>: 
+    canvas:
+        Color:
+            rgba: 0.5, 0.5, 0.5, 1
+        Rectangle:
+            pos: 0, self.height - 43
+            size: self.width, 43   
+
+    Label:
+        id: RLPATH
+        text: app.rl_path_save
+        text_size: 500, 500
+        halign:'left'
+        valign:'middle'
+        pos: 204, root.height - 104
+
+    Label:
+        id: MAPPATH
+        text: app.map_path_save
+        text_size: 500, 500
+        halign:'left'
+        valign:'middle'
+        pos: 204, root.height - 122
+
+    RLPathButton:
+        pos: root.x+1, root.height - 42
+        size: 225, 40
+        text: 'Locate Rocket League Folder'
+        on_press: self.get_path()
+        on_state: root.update_RLPATH()
+
+    MapPathButton:
+        pos: root.x + 226, root.height - 42
+        size: 150, 40
+        text: 'Import Maps'
+        on_press: self.get_path()
+        on_state: root.update_MAPPATH()
+
+    Button:
+        pos: root.x + 376, root.height - 42
+        size: 40, 40
+        text: ''
+        on_press: root.load_maps()
+        Image:
+            source: "refresh.png"
+            y: root.height - 72
+            x: root.x + 346
+
+    Button:
+        pos: root.width - 150, root.height - 42
+        size: 150, 40
+        text: 'Reset Game Files'
+        on_press: root.reset()
+
+
+            
