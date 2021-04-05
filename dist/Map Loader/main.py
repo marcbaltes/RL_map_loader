@@ -86,7 +86,7 @@ class RLPathButton(Button):
                 w.config(text="Could not locate 'rocketleague' folder")
                 w2.config(text="")
                 popup.update()
-                time.sleep(2)
+                time.sleep(1.25)
                 popup.destroy()
 
                 # prompt file select
@@ -103,10 +103,11 @@ class RLPathButton(Button):
             if rl_path == '':
                 rl_path = old_path
 
-        os.chdir(home_dir)
-        f = open("rl_path.txt", "w+")
-        f.write(rl_path)
-        f.close()
+        if rl_path != '':
+            os.chdir(home_dir)
+            f = open("rl_path.txt", "w+")
+            f.write(rl_path)
+            f.close()
         return rl_path
 
 class MapPathButton(Button):
@@ -119,10 +120,12 @@ class MapPathButton(Button):
         map_path = filedialog.askdirectory(title="Select Custom Maps folder")
         if map_path == '':
             map_path = old_path
-        os.chdir(home_dir)
-        f = open("map_path.txt", "w+")
-        f.write(map_path)
-        f.close()
+        
+        if map_path != '':
+            os.chdir(home_dir)
+            f = open("map_path.txt", "w+")
+            f.write(map_path)
+            f.close()
         return map_path
 
 class MapLoader(Widget):
