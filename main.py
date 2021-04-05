@@ -5,6 +5,7 @@ import math
 import glob
 import time
 import threading
+import zipfile as zp
 
 from tkinter import filedialog
 from shutil import copy2
@@ -192,9 +193,18 @@ class MapLoader(Widget):
             for c in list(self.children):
                 if isinstance(c, ScrollView) or isinstance(c, GridLayout): self.remove_widget(c)
 
-
             path = map_path.replace("/", "\\")
             os.chdir(path)
+
+            zips = glob.glob("*.zip")
+            # unzip files if needed
+            for z in zips:
+                name = z.replace(".zip", "")
+                with zp.ZipFile(z, 'r') as zip_ref:
+                    path = os.getcwd() + "/"
+                    zip_ref.extractall(path+name)
+                os.remove(z)
+
             os_path, dirs, files = next(os.walk(path))
             dir_count = len(dirs)
 
@@ -205,15 +215,12 @@ class MapLoader(Widget):
                             spacing=(30, 30), size_hint_y=None, padding=(30, 30))   
             grid.bind(minimum_height=grid.setter('height'))
                    
-            # populate grid with the file name and image      
+            # populate grid with the file name     
             for i in range(dir_count):
-                os.chdir(path+"/"+dirs[i])
-
                 # create button
                 btn = Button(text=dirs[i])
                 btn.bind(on_press=self.select_map)
                 grid.add_widget(btn)
-                os.chdir("../")
 
             root = ScrollView(size_hint=(1, None), size=(Window.width, Window.height), 
                             pos=(self.x, self.y-80))
