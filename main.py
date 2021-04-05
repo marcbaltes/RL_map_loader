@@ -3,6 +3,8 @@ import os
 import tkinter as tk
 import math
 import glob
+import time
+import threading
 
 from tkinter import filedialog
 from shutil import copy2
@@ -28,17 +30,79 @@ Config.set('graphics', 'resizable', True)
 home_dir = os.getcwd()
 map_path = ""
 rl_path = ""
+found_rl_path = False
+
+def search_dirs(popup, X):
+    global found_rl_path
+    global rl_path
+    for path, dirs, files in os.walk(X+":\\"):
+        if not found_rl_path:
+            for name in dirs:
+                if "CookedPCConsole" in name:
+                    rl_path = os.path.join(path, name)
+                    rl_path = rl_path.replace("\\", "/")
+                    rl_path = rl_path.removesuffix("/TAGame/CookedPCConsole")
+                    found_rl_path = True
+                    return
+        else:
+            return
 
 class RLPathButton(Button):
+
     @staticmethod
     def get_path():
         global rl_path
+        global found_rl_path
         old_path = rl_path
-        root = tk.Tk()
-        root.withdraw()
-        rl_path = filedialog.askdirectory(title="Select rocketleague folder")
+
+        # attempt to find rocketleague in C and D if
+        # no path is loaded
         if rl_path == '':
-            rl_path = old_path
+            # tell user
+            popup = tk.Tk()
+            popup.title('')
+            popup.overrideredirect(True)
+            popup.geometry('%dx%d+%d+%d' % (250, 80, 700, 300))
+            w = tk.Label(popup, text="Searching for Rocket League folder",
+                        font=("Arial", 10))
+            w.pack(pady=10)
+            w2 = tk.Label(popup, text="This may take a few seconds...",
+                        font=("Arial", 10))
+            w2.pack()
+            popup.update()
+
+            # search directories in parallel
+            s1 = threading.Thread(target=search_dirs, args=(popup,"C",), daemon=True)
+            s2 = threading.Thread(target=search_dirs, args=(popup,"D",), daemon=True)
+            s1.start()
+            s2.start()
+            s1.join()
+            s2.join()
+
+            if found_rl_path:
+                popup.destroy()
+
+            else:
+                w.config(text="Could not locate 'rocketleague' folder")
+                w2.config(text="")
+                popup.update()
+                time.sleep(2)
+                popup.destroy()
+
+                # prompt file select
+                root = tk.Tk()
+                root.withdraw()
+                rl_path = filedialog.askdirectory(title="Select rocketleague folder")
+                if rl_path == '':
+                    rl_path = old_path
+
+        else:
+            root = tk.Tk()
+            root.withdraw()
+            rl_path = filedialog.askdirectory(title="Select rocketleague folder")
+            if rl_path == '':
+                rl_path = old_path
+
         os.chdir(home_dir)
         f = open("rl_path.txt", "w+")
         f.write(rl_path)
