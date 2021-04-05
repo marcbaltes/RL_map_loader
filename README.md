@@ -3,7 +3,7 @@ New workaround for Epic Games users to load any custom map into Rocket League vi
 
 ## Installing and Running the App
 1. Download or clone this repo
-2. Unzip the file and you will see the README.md and the Map Loader folder. Open the Map Loader folder and scroll down until you find 'Map Loader.exe' (or it may just be called 'Map Loader') and double click it to launch the application.
+2. Unzip the file and inside will be a 'Map Loader' folder. Open this folder and scroll down until you find 'Map Loader.exe' (or it may just be called 'Map Loader') and double click it to launch the application.
 
 ## Usage
 1. Create a new folder, name it whatever you want. Just remember where you put it. This will be the folder that stores all your maps
