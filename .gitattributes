@@ -1,5 +1,8 @@
+special-vendored-path/* linguist-vendored
 *.toc linguist-detectable=false
 *.tex linguist-detectable=false
 *.sty linguist-detectable=false
 *.tcl linguist-detectable=false
 *.tm linguist-detectable=false
+*.tcl linguist-vendored=false
+*.tm linguist-vendored=false
