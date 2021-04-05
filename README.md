@@ -3,10 +3,13 @@ New workaround for Epic Games users to load any custom map into Rocket League vi
 
 ## Installing and Running the App
 1. Download or clone this repo
-2. Make sure Python 3 is installed: https://www.python.org/downloads/ along with Tkinter: https://tkdocs.com/tutorial/install.html
+2. Unzip the file and naviagte to dist/Map Loader. Inside there is a file called 'Map Loader.exe' (or may just be called Map Loader). Double click to launch the application.
+
+If that doesn't work, you can compile the source code below using these steps:
+1. Make sure Python 3 is installed: https://www.python.org/downloads/ along with Tkinter: https://tkdocs.com/tutorial/install.html
 	- You may have the option to install Tkinter during the installation of Python. I can't remember but just in case download Python first and see if there are any boxes you can check that allow you to install Tkinter along with the Python installation.
-3. Install kivy (App GUI): `pip install kivy`
-4. Run using `python main.py` or `python3 main.py`
+2. Install kivy (App GUI): `pip install kivy`
+3. Run using `python main.py` or `python3 main.py`
 	- Alternatively just double click 'main.py' in the folder to launch the app
 
 ## Usage
